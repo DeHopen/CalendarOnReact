@@ -20,7 +20,7 @@ export const useCalendarEvents = () => {
   }, [dispatch]);
 
   const getEventsForDate = useCallback((date: Date) => {
-    const targetDate = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0');
+    const targetDate = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1).toString().padStart(2, '0') + '-' + date.getUTCDate().toString().padStart(2, '0');
     return events.filter(e => e.date === targetDate);
   }, [events]);
 

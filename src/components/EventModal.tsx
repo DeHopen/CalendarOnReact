@@ -15,7 +15,7 @@ const EventModal: React.FC<EventModalProps> = ({ show, onClose, event, day }) =>
   const [color, setColor] = useState(event?.color || '#ffffff');
   const [time, setTime] = useState('12:00');
   const [description, setDescription] = useState('');
-  const { addNewEvent, editEvent, deleteEvent, getEventsForDate } = useCalendarEvents();
+  const { addNewEvent, editEvent, deleteEvent} = useCalendarEvents();
 
   useEffect(() => {
     if (event) {
@@ -33,7 +33,7 @@ const EventModal: React.FC<EventModalProps> = ({ show, onClose, event, day }) =>
 
 
   const handleSave = () => {
-    const formattedDate = day.getFullYear() + '-' + (day.getMonth() + 1).toString().padStart(2, '0') + '-' + day.getDate().toString().padStart(2, '0');
+    const formattedDate = day.getUTCFullYear() + '-' + (day.getUTCMonth() + 1).toString().padStart(2, '0') + '-' + day.getUTCDate().toString().padStart(2, '0');
     if (event) {
       editEvent({...event, title, color, time, description});
     } else {
@@ -41,6 +41,7 @@ const EventModal: React.FC<EventModalProps> = ({ show, onClose, event, day }) =>
     }
     onClose();
   }
+
   const handleDelete = () => {
     if (event) {
       console.log("Deleting event with ID:", event.id);
