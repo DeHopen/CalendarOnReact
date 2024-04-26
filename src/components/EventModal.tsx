@@ -34,10 +34,11 @@ const EventModal: React.FC<EventModalProps> = ({ show, onClose, event, day }) =>
 
   const handleSave = () => {
     const formattedDate = day.getUTCFullYear() + '-' + (day.getUTCMonth() + 1).toString().padStart(2, '0') + '-' + day.getUTCDate().toString().padStart(2, '0');
+    const finalTitle = title.trim() === '' ? 'New event' : title;
     if (event) {
-      editEvent({...event, title, color, time, description});
+      editEvent({...event, title: finalTitle, color, time, description});
     } else {
-      addNewEvent({date: formattedDate, title, color, time, description});
+      addNewEvent({date: formattedDate, title:finalTitle, color, time, description});
     }
     onClose();
   }
@@ -55,7 +56,7 @@ const EventModal: React.FC<EventModalProps> = ({ show, onClose, event, day }) =>
   return (
       <div className="modal">
         <div className="modal-content">
-          <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
+          <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Enter event title" />
           <textarea value={description} onChange={e => setDescription(e.target.value)} placeholder="Description" />
           <input type="time" value={time} onChange={e => setTime(e.target.value)} />
           <button onClick={handleSave}>Save</button>
