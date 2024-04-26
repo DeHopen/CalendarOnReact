@@ -1,0 +1,18 @@
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  border: 1px solid #ccc;
+  padding: 10px;
+  cursor: pointer;
+
+  .event {
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 4px;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+  }
+}
