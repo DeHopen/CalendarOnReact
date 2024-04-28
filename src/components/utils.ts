@@ -1,4 +1,3 @@
-
 export const getRandomPastelColor = () => {
   const baseRed = Math.floor(Math.random() * 256);
   const baseGreen = Math.floor(Math.random() * 256);

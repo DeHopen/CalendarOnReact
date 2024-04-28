@@ -1,21 +1,17 @@
 import React, {useState} from 'react';
-import DayComponent from './DayComponent';
 import EventModal from './EventModal';
 import './CalendarComponent.scss';
 import {CalendarEvent} from "../store/features/eventsSlice";
+import DayView from "./selector/DayView";
+import WeekView from "./selector/WeekView";
+import MonthView from "./selector/MonthView";
 
 const CalendarComponent: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [activeDay, setActiveDay] = useState<Date | null>(null);
   const [activeEvent, setActiveEvent] = useState<CalendarEvent | undefined>(undefined);
+  const [view, setView] = useState<'day' | 'week' | 'month'>('month');
 
-
-  const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
-
-  const daysInMonth = (date: Date) => {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-  };
 
   const handleDayClick = (day: Date, event?: CalendarEvent) => {
     setActiveDay(day);
@@ -23,26 +19,30 @@ const CalendarComponent: React.FC = () => {
   };
 
   const prevMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
   };
 
   const nextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   };
 
   return (
       <div className="calendar">
         <div className="header">
           <button onClick={prevMonth}>&laquo;</button>
-          <h2>{monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}</h2>
+          <h2>{currentDate.toLocaleString('default', {month: 'long'})} {currentDate.getFullYear()}</h2>
           <button onClick={nextMonth}>&raquo;</button>
         </div>
-        <div className="days-grid">
-          {Array.from({length: daysInMonth(currentDate)}, (_, index) => (
-              <DayComponent key={index} day={new Date(currentDate.getFullYear(), currentDate.getMonth(), index + 1)}
-                            onDayClick={handleDayClick} setActiveEvent={setActiveEvent}/>
-          ))}
+        <div className="view-selector">
+          <button onClick={() => setView('day')}>Day</button>
+          <button onClick={() => setView('week')}>Week</button>
+          <button onClick={() => setView('month')}>Month</button>
         </div>
+        {view === 'day' && <DayView day={currentDate} onDayClick={handleDayClick} setActiveEvent={setActiveEvent}/>}
+        {view === 'week' &&
+            <WeekView week={currentDate} onDayClick={handleDayClick} setActiveEvent={setActiveEvent}/>}
+        {view === 'month' &&
+            <MonthView onDayClick={handleDayClick} setActiveEvent={setActiveEvent}/>}
         {activeDay && <EventModal show={true} onClose={() => {
           setActiveDay(null);
           setActiveEvent(undefined);
