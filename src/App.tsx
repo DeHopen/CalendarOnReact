@@ -12,12 +12,12 @@ function App() {
   return (
       <div className="App">
         <div>
-          <h1>{isBeta ? 'Beta Version' : 'Actual Version'}</h1>
+          <h1>{isBeta ? 'Actual Version' : 'Beta Version'}</h1>
           <button onClick={toggleComponent}>
-            {isBeta ? 'Switch to Actual' : 'Switch to Beta'}
+            {isBeta ? 'Switch to Beta' : 'Switch to Actual'}
           </button>
         </div>
-        {isBeta ? <Calendar/> : <CalendarComponent/>}
+        {isBeta ? <CalendarComponent/> : <Calendar/>}
       </div>
   );
 }

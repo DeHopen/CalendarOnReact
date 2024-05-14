@@ -8,7 +8,7 @@ const CalendarComponent: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [activeDay, setActiveDay] = useState<Date | null>(null);
   const [activeEvent, setActiveEvent] = useState<CalendarEvent | undefined>(undefined);
-
+  const [modalPosition, setModalPosition] = useState<{ x: number, y: number } | undefined>(undefined);
 
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
@@ -17,9 +17,12 @@ const CalendarComponent: React.FC = () => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   };
 
-  const handleDayClick = (day: Date, event?: CalendarEvent) => {
+  const handleDayClick = (day: Date, event?: CalendarEvent, eventPosition?: { x: number, y: number }) => {
     setActiveDay(day);
     setActiveEvent(event);
+    if (eventPosition) {
+      setModalPosition(eventPosition);
+    }
   };
 
   const prevMonth = () => {
@@ -39,14 +42,24 @@ const CalendarComponent: React.FC = () => {
         </div>
         <div className="days-grid">
           {Array.from({length: daysInMonth(currentDate)}, (_, index) => (
-              <DayComponent key={index} day={new Date(currentDate.getFullYear(), currentDate.getMonth(), index + 1)}
-                            onDayClick={handleDayClick} setActiveEvent={setActiveEvent}/>
+              <DayComponent
+                  key={index}
+                  day={new Date(currentDate.getFullYear(), currentDate.getMonth(), index + 1)}
+                  onDayClick={handleDayClick}
+                  setActiveEvent={setActiveEvent}
+              />
           ))}
         </div>
-        {activeDay && <EventModal show={true} onClose={() => {
-          setActiveDay(null);
-          setActiveEvent(undefined);
-        }} event={activeEvent} day={activeDay}/>}
+        {activeDay && <EventModal
+            show={true}
+            onClose={() => {
+              setActiveDay(null);
+              setActiveEvent(undefined);
+            }}
+            event={activeEvent}
+            day={activeDay}
+            position={modalPosition}
+        />}
       </div>
   );
 };

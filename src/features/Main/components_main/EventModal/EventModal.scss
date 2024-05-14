@@ -1,35 +1,91 @@
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  z-index: 1000;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 
   .modal-content {
-    position: absolute;
-    background-color: white;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 
-    input[type="text"], input[type="color"] {
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      width: 200px;
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+
+      .modal-title-input {
+        font-size: 18px;
+        margin: 0;
+        border: none;
+        outline: none;
+        flex-grow: 1;
+      }
+
+      .close {
+        font-size: 24px;
+        cursor: pointer;
+      }
     }
 
-    button {
-      padding: 10px 20px;
-      margin-top: 10px;
-      cursor: pointer;
+    .modal-body {
+      padding: 10px 0;
+
+      p {
+        margin: 5px 0;
+      }
+
+      .modal-time-input,
+      .modal-description-input {
+        width: 94%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      .modal-description-input {
+        resize: vertical;
+        height: 80px;
+      }
     }
+
+    .modal-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+
+      button {
+        background-color: #007bff;
+        border: none;
+        color: white;
+        padding: 8px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+    }
+
   }
 }
+
+
+
+
+
+

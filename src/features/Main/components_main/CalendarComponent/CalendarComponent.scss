@@ -32,16 +32,32 @@
   }
 
   .days-grid {
-    text-align: center;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 20px;
+    gap: 1px;
+    border-radius: 10px;
 
     .day {
+      padding: 10px;
+      min-height: 100px;
+      position: relative;
+      border: 1px solid #2c2c2c;
+      border-radius: 5px;
+
+      span {
+        display: block;
+        color: #000;
+      }
 
       .event {
-        border-radius: 5px;
-        padding: 10px;
+        padding: 2px 5px;
+        margin-top: 5px;
+        border-radius: 3px;
+        font-size: 12px;
+        cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }
