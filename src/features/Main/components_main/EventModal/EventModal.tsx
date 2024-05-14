@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useCalendarEvents } from '../store/hooks';
-import {CalendarEvent} from '../store/features/eventsSlice';
-import { getRandomPastelColor } from './utils';
+import React, {useEffect, useState} from 'react';
+import {useCalendarEvents} from '../../../../store/hooks';
+import {CalendarEvent} from '../../../../store/slices/eventsSlice';
+import {getRandomPastelColor} from '../../utils';
 
 interface EventModalProps {
   show: boolean;
@@ -10,12 +10,12 @@ interface EventModalProps {
   day: Date;
 }
 
-const EventModal: React.FC<EventModalProps> = ({ show, onClose, event, day }) => {
+const EventModal: React.FC<EventModalProps> = ({show, onClose, event, day}) => {
   const [title, setTitle] = useState(event?.title || '');
   const [color, setColor] = useState(event?.color || '#ffffff');
   const [time, setTime] = useState('12:00');
   const [description, setDescription] = useState('');
-  const { addNewEvent, editEvent, deleteEvent} = useCalendarEvents();
+  const {addNewEvent, editEvent, deleteEvent} = useCalendarEvents();
 
   useEffect(() => {
     if (event) {
@@ -23,8 +23,7 @@ const EventModal: React.FC<EventModalProps> = ({ show, onClose, event, day }) =>
       setColor(event.color);
       setTime(event.time || '12:00');
       setDescription(event.description || '');
-    }
-    else {
+    } else {
       setColor(getRandomPastelColor());
       setTime('12:00');
       setDescription('');
@@ -38,7 +37,7 @@ const EventModal: React.FC<EventModalProps> = ({ show, onClose, event, day }) =>
     if (event) {
       editEvent({...event, title: finalTitle, color, time, description});
     } else {
-      addNewEvent({date: formattedDate, title:finalTitle, color, time, description});
+      addNewEvent({date: formattedDate, title: finalTitle, color, time, description});
     }
     onClose();
   }
@@ -54,16 +53,42 @@ const EventModal: React.FC<EventModalProps> = ({ show, onClose, event, day }) =>
   if (!show) return null;
 
   return (
-      <div className="modal">
+      <div className={`modal ${show ? 'show' : ''}`}>
         <div className="modal-content">
-          <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Enter event title" />
-          <textarea value={description} onChange={e => setDescription(e.target.value)} placeholder="Description" />
-          <input type="time" value={time} onChange={e => setTime(e.target.value)} />
+          <span className="close" onClick={onClose}>&times;</span>
+          <h2
+              contentEditable
+              onBlur={e => setTitle(e.currentTarget.textContent || '')}
+              suppressContentEditableWarning={true}
+          >
+            {title}
+          </h2>
+
+          <p><strong>Date:</strong> {day.toLocaleDateString()}</p> {/* Дата события */}
+          <p><strong>Time:</strong>
+            <div
+                contentEditable
+                onBlur={e => setTime(e.currentTarget.textContent || '')}
+                suppressContentEditableWarning={true}
+            >
+              {time}
+            </div>
+
+          </p>
+          <p><strong>Description: </strong></p>
+          <p
+              contentEditable
+              onBlur={e => setDescription(e.currentTarget.textContent || '')}
+              suppressContentEditableWarning={true}
+          >
+            {description}
+          </p>
           <button onClick={handleSave}>Save</button>
           <button onClick={onClose}>Close</button>
           {event && <button onClick={handleDelete}>Delete</button>}
         </div>
       </div>
+
   );
 };
 

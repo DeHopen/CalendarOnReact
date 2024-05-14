@@ -1,6 +1,6 @@
 import React from 'react';
 import DayView from "./DayView";
-import {CalendarEvent} from "../../store/features/eventsSlice";
+import {CalendarEvent} from "../../../../store/slices/eventsSlice";
 
 interface WeekViewProps {
   week: Date;

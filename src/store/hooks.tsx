@@ -1,13 +1,19 @@
-import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addEvent, removeEvent, updateEvent, CalendarEvent } from './features/eventsSlice';
-import { RootState } from './store';
+import {useCallback} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {addEvent, CalendarEvent, removeEvent, updateEvent} from './slices/eventsSlice';
+import {RootState} from './store';
 
 export const useCalendarEvents = () => {
   const dispatch = useDispatch();
   const events = useSelector((state: RootState) => state.events.events);
 
-  const addNewEvent = useCallback((event: { date: string; title: string; color: string, time: string, description: string }) => {
+  const addNewEvent = useCallback((event: {
+    date: string;
+    title: string;
+    color: string,
+    time: string,
+    description: string
+  }) => {
     dispatch(addEvent(event));
   }, [dispatch]);
 
@@ -25,7 +31,5 @@ export const useCalendarEvents = () => {
   }, [events]);
 
 
-
-
-  return { addNewEvent, deleteEvent, editEvent, getEventsForDate };
+  return {addNewEvent, deleteEvent, editEvent, getEventsForDate};
 };

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {CalendarEvent} from "../../store/features/eventsSlice";
+import {CalendarEvent} from "../../../../store/slices/eventsSlice";
 import DayView from "./DayView";
 
 interface MonthViewProps {

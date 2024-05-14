@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import EventModal from './EventModal';
-import './CalendarComponent.scss';
-import {CalendarEvent} from "../store/features/eventsSlice";
-import DayView from "./selector/DayView";
-import WeekView from "./selector/WeekView";
-import MonthView from "./selector/MonthView";
+import EventModal from '../../../Main/components_main/EventModal/EventModal';
+import './Calendar.scss';
+import {CalendarEvent} from "../../../../store/slices/eventsSlice";
+import DayView from "../selector/DayView";
+import WeekView from "../selector/WeekView";
+import MonthView from "../selector/MonthView";
 
-const CalendarComponent: React.FC = () => {
+const Calendar: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [activeDay, setActiveDay] = useState<Date | null>(null);
   const [activeEvent, setActiveEvent] = useState<CalendarEvent | undefined>(undefined);
@@ -51,4 +51,4 @@ const CalendarComponent: React.FC = () => {
   );
 };
 
-export default CalendarComponent;
+export default Calendar;
